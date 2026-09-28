@@ -1,0 +1,19 @@
+{
+  "approval_threshold": 500000,
+  "description": "Illustrative project rule; replace with the organization's approved threshold in the same currency as input amounts. Not a statutory SOX/COSO threshold.",
+  "default_control_id": "configured-approval",
+  "controls": {
+    "configured-approval": {
+      "title": "Illustrative transaction approval evidence",
+      "applicability": "amount_above_approval_threshold",
+      "required_fields": ["amount", "transaction_id"],
+      "required_records": {
+        "approval": {
+          "required_fields": ["record_id", "transaction_id", "amount", "status", "reviewer", "recorded_at", "source"],
+          "match_fields": {"transaction_id": "transaction_id", "amount": "amount"},
+          "expected_values": {"status": "Approved"}
+        }
+      }
+    }
+  }
+}

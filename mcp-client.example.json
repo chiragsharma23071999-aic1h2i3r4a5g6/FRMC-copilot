@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "frmc": {
+      "command": "D:\\agentic AI assignments\\Agentic AI project\\FRMC project part 2\\venv\\Scripts\\python.exe",
+      "args": [
+        "D:\\agentic AI assignments\\Agentic AI project\\FRMC project part 2\\mcp_server.py"
+      ]
+    }
+  }
+}

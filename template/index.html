@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>FRMC Copilot Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f9f9f9; }
+        h1 { color: #2c3e50; }
+        section { margin-bottom: 30px; padding: 15px; background: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h2 { color: #34495e; margin-top: 0; }
+        form { margin-top: 10px; }
+        input[type="text"], input[type="file"] { padding: 8px; margin-right: 10px; width: 300px; }
+        button { padding: 8px 12px; background: #3498db; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #2980b9; }
+        .report-box { border: 1px solid #ccc; padding: 10px; margin: 5px; background: #f4f6f7; border-radius: 6px; }
+    </style>
+</head>
+<body>
+    <h1>📊 FRMC Copilot Dashboard</h1>
+
+    <!-- Upload Section -->
+    <section>
+        <h2>Upload Finance Documents</h2>
+        <form id="upload-form" action="/upload" method="post" enctype="multipart/form-data">
+            <p>Select finance/FRMC documents or a folder: DOCX, TXT, Excel (.xlsx/.xls), CSV, or PDF. Up to 500 MB per file, 1 GB per batch (including request overhead), and 1,000 files. Large documents can take several minutes to process.</p>
+            <p>Folder files are stored with their folder names joined by underscores. Unsupported folder files are skipped. If any selected document fails validation, no documents in that batch are added.</p>
+            <label for="upload-files">Choose files</label>
+            <input id="upload-files" type="file" name="file" multiple accept=".docx,.txt,.xlsx,.xls,.csv,.pdf">
+            <label for="upload-folder">Choose folder</label>
+            <input id="upload-folder" type="file" webkitdirectory multiple>
+            <p id="upload-selection" role="status"></p>
+            <button type="submit">Upload</button>
+        </form>
+        <p id="upload-status" role="status" aria-live="polite"></p>
+        <h3>Uploaded documents</h3>
+        <p>Remove a document to delete its file and searchable content. You can then upload a replacement.</p>
+        <button type="button" id="refresh-documents">Refresh files</button>
+        <ul id="uploaded-documents" aria-label="Uploaded documents"></ul>
+    </section>
+
+    <!-- Build RAG -->
+    <section>
+        <h2>Build Knowledge Base</h2>
+        <form action="/build_rag" method="post">
+            <button type="submit">Build RAG</button>
+        </form>
+    </section>
+
+    <!-- Ask Questions -->
+    <section>
+        <h2>Chat with FRMC Copilot</h2>
+        <p>Ask in your own words and follow up with questions. Free AI replies need internet access; free-service limits may apply.</p>
+        <div id="chat-messages" aria-live="polite"></div>
+        <form id="chat-form">
+            <label for="chat-question">Your message</label>
+            <input type="text" id="chat-question" maxlength="8000" placeholder="Explain SOX controls in simple words..." required>
+            <button type="submit">Send</button>
+            <button type="button" id="clear-chat">New conversation</button>
+        </form>
+    </section>
+
+    <!-- Ask Questions -->
+    <section>
+        <h2>Ask SOX / COSO / FRMC Question</h2>
+        <form action="/ask" method="post">
+            <input type="text" id="question" name="question" placeholder="Ask a question..." required>
+            <button type="submit">Ask</button>
+        </form>
+        <button onclick="startVoice()">🎤 Speak Question</button>
+    </section>
+
+    <!-- Reports -->
+    <section>
+        <h2>Run Evidence and Risk Agents</h2>
+        <p>Agents assess the selected control using uploaded documents. The latest uploaded definition for that Control ID takes priority. Enter a Control ID and Transaction ID; matching transaction and approval records are read from your files. Missing requirements, evidence, or risk rules are reported explicitly.</p>
+        <form action="/run_agents" method="post" id="agents-form">
+            <label>Question <input type="text" name="question" value="How do you test controls and evidence?" required></label>
+            <label>Amount <input type="number" name="amount" min="0" step="any"></label>
+            <label>Transaction ID <input type="text" name="transaction_id" placeholder="ID of the transaction being assessed"></label>
+            <label>Approval
+                <select name="approval">
+                    <option value="">Not provided</option>
+                    <option value="true">Approved</option>
+                    <option value="false">Not approved</option>
+                </select>
+            </label>
+            <label>Criticality (entered claim)
+                <select name="criticality">
+                    <option value="">Not provided</option>
+                    <option>Low</option><option>Medium</option><option>High</option>
+                </select>
+            </label>
+            <details>
+                <summary>Supporting approval record and control selection</summary>
+                <p>Enter details from the actual record. Source references are retained for human verification; the app does not authenticate them.</p>
+                <label>Control ID <input type="text" name="control_id" placeholder="For example: FRMC-001"></label>
+                <p>You can also mention the Control ID in your question. Entered record details are checked against uploaded records; they do not replace missing files.</p>
+                <label>Record ID <input type="text" name="record_id"></label>
+                <label>Transaction ID on record <input type="text" name="record_transaction_id"></label>
+                <label>Amount on record <input type="number" name="record_amount" min="0" step="any"></label>
+                <label>Decision on record
+                    <select name="record_status">
+                        <option value="">Not provided</option>
+                        <option>Approved</option><option>Rejected</option><option>Pending</option>
+                    </select>
+                </label>
+                <label>Reviewer <input type="text" name="record_reviewer"></label>
+                <label>Record timestamp <input type="text" name="record_recorded_at" placeholder="2026-09-01T10:00:00Z"></label>
+                <label>Record source/reference <input type="text" name="record_source" placeholder="Document and page, or system record reference"></label>
+            </details>
+            <button type="submit">Run Agents</button>
+        </form>
+    </section>
+
+    <!-- Reports -->
+    <section>
+        <h2>Reports</h2>
+        <form action="/generate_report" method="post">
+            <input type="text" name="question" placeholder="Generate report for question..." required>
+            <button type="submit">Generate Report</button>
+        </form>
+        <form action="/reports" method="get">
+            <button type="submit">List Reports</button>
+        </form>
+    </section>
+
+    <pre id="result" role="status" aria-live="polite" style="white-space: pre-wrap; overflow-wrap: anywhere;"></pre>
+    <script>
+        const output = document.getElementById("result");
+        document.querySelectorAll("form:not(#chat-form):not(#upload-form)").forEach(form => {
+            form.addEventListener("submit", async event => {
+                event.preventDefault();
+                const button = form.querySelector("button");
+                button.disabled = true;
+                output.textContent = "Processing...";
+                try {
+                    const options = { method: form.method.toUpperCase() };
+                    if (options.method !== "GET") options.body = new FormData(form);
+                    if (form.id === "agents-form") {
+                        const fields = new FormData(form);
+                        const evidence = {};
+                        const risk_factors = {};
+                        if (fields.get("amount") !== "") evidence.amount = Number(fields.get("amount"));
+                        if (fields.get("approval") !== "") evidence.approval = fields.get("approval") === "true";
+                        if (fields.get("transaction_id").trim()) evidence.transaction_id = fields.get("transaction_id").trim();
+                        const record = {};
+                        if (fields.get("record_id").trim()) record.record_id = fields.get("record_id").trim();
+                        for (const name of ["transaction_id", "status", "reviewer", "recorded_at", "source"]) {
+                            const value = fields.get("record_" + name).trim();
+                            if (value) record[name] = value;
+                        }
+                        if (fields.get("record_amount") !== "") record.amount = Number(fields.get("record_amount"));
+                        if (Object.keys(record).length) evidence.records = {approval: record};
+                        if (fields.get("criticality")) risk_factors.criticality = fields.get("criticality");
+                        const assessment = {question: fields.get("question"), evidence, risk_factors};
+                        if (fields.get("control_id").trim()) assessment.control_id = fields.get("control_id").trim();
+                        options.headers = {"Content-Type": "application/json"};
+                        options.body = JSON.stringify(assessment);
+                    }
+                    const response = await fetch(form.action, options);
+                    const data = await response.json();
+                    output.textContent = response.ok ? JSON.stringify(data, null, 2) :
+                        [data.error, ...(data.rejected || []).map(item => item.filename + ": " + item.reason)].join("\n");
+                } catch (error) {
+                    output.textContent = "Unable to reach the server. Please try again.";
+                } finally {
+                    button.disabled = false;
+                }
+            });
+        });
+        // Voice recognition feature
+        function startVoice() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                output.textContent = "Voice input is unavailable in this browser. Please type your question.";
+                return;
+            }
+            const recognition = new SpeechRecognition();
+            recognition.onerror = () => { output.textContent = "Voice input failed. Please type your question."; };
+            recognition.lang = "en-US";
+            recognition.start();
+            recognition.onresult = function(event) {
+                document.getElementById("question").value = event.results[0][0].transcript;
+            };
+        }
+    </script>
+    <script src="{{ url_for('static', filename='chat.js') }}"></script>
+    <script>window.uploadLimits = {{ upload_limits | tojson }};</script>
+    <script src="{{ url_for('static', filename='documents.js') }}"></script>
+</body>
+</html>

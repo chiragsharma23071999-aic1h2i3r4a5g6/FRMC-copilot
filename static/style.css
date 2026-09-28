@@ -1,0 +1,26 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #222;
+    margin: 20px;
+}
+
+h1, h2 {
+    color: #004080;
+}
+
+button {
+    background-color: #004080;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+}
+
+button:focus {
+    outline: 3px solid #ffcc00; /* High contrast focus */
+}
+
+input[type="file"] {
+    margin: 10px 0;
+}

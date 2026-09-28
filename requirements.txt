@@ -1,0 +1,15 @@
+flask>=3,<4
+python-dotenv>=1,<2
+langchain-core>=1,<2
+langchain-chroma>=1,<2
+langchain-text-splitters>=1,<2
+openai>=2,<4
+langgraph>=1,<2
+chromadb>=1,<2
+sqlalchemy>=2,<3
+pandas>=2,<4
+PyPDF2>=3,<4
+python-docx>=1,<2
+openpyxl>=3.1.5
+xlrd>=2.0.1
+mcp>=1.26,<2

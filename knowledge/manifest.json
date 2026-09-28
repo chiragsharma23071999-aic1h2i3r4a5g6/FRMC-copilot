@@ -1,0 +1,161 @@
+{
+  "schema_version": "2.0.0",
+  "generated_on": "2026-09-09",
+  "canonical_questions": 1312,
+  "topics": 164,
+  "alternate_questions": 4001,
+  "faq_questions": 328,
+  "expert_questions": 164,
+  "categories": {
+    "COSO / Framework and implementation": 96,
+    "COSO / Framework comparisons": 24,
+    "COSO / Individual principles": 136,
+    "Cases / Documented history": 16,
+    "Emerging practice / AI and automation": 8,
+    "FRMC / Risk foundations and governance": 120,
+    "FRMC / Treasury and quantitative risk": 112,
+    "Financial reporting / Business processes": 64,
+    "GRC / Governance and assurance": 16,
+    "IT / General and application controls": 136,
+    "Internal audit / Evidence and testing": 64,
+    "Internal audit / Planning and professional practice": 120,
+    "Internal audit / Sampling": 24,
+    "SOX / Applicability": 32,
+    "SOX / Foundations and law": 152,
+    "SOX / ICFR and control evaluation": 192
+  },
+  "difficulty_counts": {
+    "Beginner": 328,
+    "Intermediate": 656,
+    "Advanced": 328
+  },
+  "intent_counts": {
+    "overview": 164,
+    "implementation": 164,
+    "evidence": 164,
+    "assessment": 164,
+    "mistakes": 164,
+    "example": 164,
+    "interview": 164,
+    "expert": 164
+  },
+  "sha256": "05a5cf2baa2c358f857b1791f5b09577c4baa051b5a4654d6980ed6d8ae757ad",
+  "authority_sources": [
+    {
+      "id": "sox",
+      "title": "Sarbanes-Oxley Act of 2002 (original enacted text)",
+      "url": "https://www.congress.gov/107/plaws/publ204/PLAW-107publ204.pdf"
+    },
+    {
+      "id": "sec",
+      "title": "SEC management ICFR reporting and certification rule",
+      "url": "https://www.sec.gov/files/rules/final/33-8238.htm"
+    },
+    {
+      "id": "scope",
+      "title": "SEC accelerated filer definitions compliance guide",
+      "url": "https://www.sec.gov/resources-small-businesses/small-business-compliance-guides/accelerated-filer-large-accelerated-filer-definitions"
+    },
+    {
+      "id": "icfr",
+      "title": "PCAOB AS 2201: Integrated ICFR audit",
+      "url": "https://pcaobus.org/oversight/standards/auditing-standards/details/AS2201"
+    },
+    {
+      "id": "evidence",
+      "title": "PCAOB AS 1105: Audit Evidence",
+      "url": "https://pcaobus.org/oversight/standards/auditing-standards/details/AS1105"
+    },
+    {
+      "id": "sampling",
+      "title": "PCAOB AS 2315: Audit Sampling",
+      "url": "https://pcaobus.org/oversight/standards/auditing-standards/details/AS2315"
+    },
+    {
+      "id": "coso",
+      "title": "COSO Internal Control guidance",
+      "url": "https://www.coso.org/internal-control"
+    },
+    {
+      "id": "erm",
+      "title": "COSO Enterprise Risk Management guidance",
+      "url": "https://www.coso.org/enterprise-risk-management"
+    },
+    {
+      "id": "iia",
+      "title": "IIA Global Internal Audit Standards, effective January 9, 2025",
+      "url": "https://www.theiia.org/en/standards/2024-standards/global-internal-audit-standards/"
+    },
+    {
+      "id": "lines",
+      "title": "IIA Statements of Position, updated July 2026",
+      "url": "https://www.theiia.org/en/resources/statements-of-position"
+    },
+    {
+      "id": "cobit",
+      "title": "ISACA COBIT resources",
+      "url": "https://www.isaca.org/resources/cobit"
+    },
+    {
+      "id": "iso",
+      "title": "ISO 31000:2018 Risk management guidelines",
+      "url": "https://www.iso.org/standard/65694.html"
+    },
+    {
+      "id": "bank",
+      "title": "Basel Core Principles for effective banking supervision",
+      "url": "https://www.bis.org/committees/bcbs/basel-framework/standard/bcp?allChapters=true"
+    },
+    {
+      "id": "credit",
+      "title": "Basel Committee 2025 credit risk principles",
+      "url": "https://www.bis.org/bcbs/publ/d595.pdf"
+    },
+    {
+      "id": "ai",
+      "title": "NIST AI Risk Management Framework",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+    },
+    {
+      "id": "worldcom",
+      "title": "SEC WorldCom amended complaint announcement",
+      "url": "https://www.sec.gov/enforcement-litigation/litigation-releases/lr-17829"
+    },
+    {
+      "id": "enron",
+      "title": "SEC 2002 annual report, enforcement discussion",
+      "url": "https://www.sec.gov/pdf/annrep02/ar02full.pdf"
+    },
+    {
+      "id": "soc",
+      "title": "AICPA SOC suite and engagement resources",
+      "url": "https://www.aicpa-cima.com/resources/landing/system-and-organization-controls-soc-suite-of-services"
+    },
+    {
+      "id": "ifrs9",
+      "title": "IFRS Foundation: IFRS 9 Financial Instruments",
+      "url": "https://www.ifrs.org/issued-standards/list-of-standards/ifrs-9-financial-instruments/"
+    },
+    {
+      "id": "cecl",
+      "title": "FASB Staff Q&A on Topic 326 expected credit loss estimates",
+      "url": "https://fasb.org/page/PageContent?pageId=%2Fprojects%2Fother-staff-projects%2Ffasb-staff-qatopic-326-no-2developing-an-estimate-of-expect.html"
+    }
+  ],
+  "content_policy": {
+    "scope": "Broad curated knowledge base, not exhaustive coverage of every possible question or jurisdiction.",
+    "authorship": "Original AI-authored educational explanations and practitioner examples; not licensed framework text.",
+    "review": "Primary-source checks and automated technical validation do not constitute independent professional sign-off. Domain review is required before reliance in enterprise decisions.",
+    "refresh": "Review authority changes before each applicable reporting cycle and after relevant rule or standards updates; reviewed_on is not a guarantee of continuing currency.",
+    "version_notes": [
+      "SOX original enacted text is historical; use current implementing rules and amendments for applicability.",
+      "PCAOB AS 2201 page identifies amendments effective December 15, 2026; do not apply future amendments prematurely.",
+      "SEC Release 33-11419 is a proposal, not treated here as effective law.",
+      "IIA Three Lines source reflects the July 2026 statements of position.",
+      "IIA Global Internal Audit Standards effective January 9, 2025 are the standards baseline.",
+      "Expert content uses difficulty Advanced plus proficiency Expert to preserve the requested difficulty enum."
+    ],
+    "retrieval": "Explicit aliases map to one canonical answer. Unlisted wording uses conservative offline lexical matching, not unrestricted semantic understanding.",
+    "examples": "All examples are hypothetical except explicitly labeled historical context. No real client data is included."
+  }
+}
